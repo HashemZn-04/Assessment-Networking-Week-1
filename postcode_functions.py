@@ -6,6 +6,7 @@ import json
 
 CACHE_FILE = "./postcode_cache.json"
 
+
 def load_cache() -> dict:
     """Loads the cache from a file and converts it from JSON to a dictionary."""
     # This function is used in Task 3, you can ignore it for now.
@@ -18,9 +19,14 @@ def save_cache(cache: dict):
     ...
 
 
-
 def validate_postcode(postcode: str) -> bool:
-    pass
+    """Validates a given postcode."""
+    if not isinstance(postcode, str):
+        raise TypeError("You must enter a string!")
+    if len(postcode) not in range(5, 8):
+        raise ValueError(
+            "You must enter a postcode of valid length (5-7 characters.)")
+    return True
 
 
 def get_postcode_for_location(lat: float, long: float) -> str:
