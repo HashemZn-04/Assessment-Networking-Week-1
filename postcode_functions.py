@@ -60,7 +60,11 @@ def get_postcodes_details(postcodes: list[str]) -> dict:
     """
     if not isinstance(postcodes, list):
         raise TypeError("Postcodes must be a list.")
+    for postcode in postcodes:
+        if not isinstance(postcode, str):
+            raise TypeError("All postcodes must be string.")
     url = f"https://api.postcodes.io/postcodes"
+    postcodes = {"postcodes": postcodes}
     result = req.post(url, timeout=30, json=postcodes)
     data = result.json()
     return data
