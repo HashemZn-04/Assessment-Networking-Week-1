@@ -27,18 +27,21 @@ def validate_postcode(postcode: str) -> bool:
     """Validates a given postcode."""
     if not isinstance(postcode, str):
         raise TypeError('Function expects a string.')
-    url = f"https://api.postcodes.io/postcodes/{postcode}/validate"
-    try:
-        result = req.get(url, timeout=15)
-        result.raise_for_status()
-    except req.exceptions.HTTPError as e:
-        status = e.response.status_code
-        if 500 <= status < 600:
-            raise req.RequestException('Unable to access API.')
     cache = load_cache()
-    cache[postcode] = {"valid": result.json()['result']}
-    save_cache(cache)
-    return result.json()['result']
+    if postcode in cache and 'valid' in cache['postcode']:
+        return cache[postcode]['valid']
+    else:
+        url = f"https://api.postcodes.io/postcodes/{postcode}/validate"
+        try:
+            result = req.get(url, timeout=15)
+            result.raise_for_status()
+        except req.exceptions.HTTPError as e:
+            status = e.response.status_code
+            if 500 <= status < 600:
+                raise req.RequestException('Unable to access API.')
+        cache[postcode] = {"valid": result.json()['result']}
+        save_cache(cache)
+        return result.json()['result']
 
 
 def get_postcode_for_location(lat: float, long: float) -> str:
@@ -69,19 +72,22 @@ def get_postcode_completions(postcode_start: str) -> list[str]:
     """
     if not isinstance(postcode_start, str):
         raise TypeError('Function expects a string.')
-    url = f"https://api.postcodes.io/postcodes/{postcode_start}/autocomplete"
-    try:
-        result = req.get(url, timeout=15)
-        result.raise_for_status()
-    except req.exceptions.HTTPError as e:
-        status = e.response.status_code
-        if 500 <= status < 600:
-            raise req.RequestException('Unable to access API.')
-    data = result.json()['result']
     cache = load_cache()
-    cache[postcode_start] = {"completions": data}
-    save_cache(cache)
-    return data
+    if postcode_start in cache and 'completions' in cache[postcode_start]:
+        return cache[postcode_start]['completions']
+    else:
+        url = f"https://api.postcodes.io/postcodes/{postcode_start}/autocomplete"
+        try:
+            result = req.get(url, timeout=15)
+            result.raise_for_status()
+        except req.exceptions.HTTPError as e:
+            status = e.response.status_code
+            if 500 <= status < 600:
+                raise req.RequestException('Unable to access API.')
+        data = result.json()['result']
+        cache[postcode_start] = {"completions": data}
+        save_cache(cache)
+        return data
 
 
 def get_postcodes_details(postcodes: list[str]) -> dict:
