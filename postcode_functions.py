@@ -53,7 +53,15 @@ def get_postcode_completions(postcode_start: str) -> list[str]:
 
 
 def get_postcodes_details(postcodes: list[str]) -> dict:
-    pass
+    """
+    Returns a dict of dicts where each dict contains one of
+    the postcodes within the inputted list of postcodes, followed
+    by details for that given postcode.
+    """
+    url = f"https://api.postcodes.io/{postcodes}"
+    result = req.get(url, timeout=30)
+    data = result.json()['result']
+    return data
 
 
 if __name__ == "__main__":
