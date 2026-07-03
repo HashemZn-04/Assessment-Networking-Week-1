@@ -10,8 +10,11 @@ CACHE_FILE = "./postcode_cache.json"
 def load_cache() -> dict:
     """Loads the cache from a file and converts it from JSON to a dictionary."""
     # This function is used in Task 3, you can ignore it for now.
-    with open(CACHE_FILE, encoding="utf-8") as f:
-        return json.load(f)
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    else:
+        return {}
 
 
 def save_cache(cache: dict):
@@ -32,7 +35,9 @@ def validate_postcode(postcode: str) -> bool:
         status = e.response.status_code
         if 500 <= status < 600:
             raise req.RequestException('Unable to access API.')
-    save_cache({postcode: {"validation": result.json()['result']}})
+    cache = load_cache()
+    cache[postcode] = {"valid": result.json()['result']}
+    save_cache(cache)
     return result.json()['result']
 
 
@@ -73,7 +78,9 @@ def get_postcode_completions(postcode_start: str) -> list[str]:
         if 500 <= status < 600:
             raise req.RequestException('Unable to access API.')
     data = result.json()['result']
-    save_cache({postcode_start: {"completion": data}})
+    cache = load_cache()
+    cache[postcode_start] = {"completions": data}
+    save_cache(cache)
     return data
 
 
