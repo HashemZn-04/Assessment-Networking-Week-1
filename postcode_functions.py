@@ -60,12 +60,13 @@ def get_postcodes_details(postcodes: list[str]) -> dict:
     """
     if not isinstance(postcodes, list):
         raise TypeError("Postcodes must be a list.")
-    url = f"https://api.postcodes.io/{postcodes}"
-    result = req.get(url, timeout=30)
-    data = result.json()['result']
+    url = f"https://api.postcodes.io/postcodes?{postcodes}"
+    result = req.post(url, timeout=30)
+    data = result.json()
     return data
 
 
 if __name__ == "__main__":
     example_postcode = get_postcode_for_location(51.507, 0.127)
-    print(type(get_postcodes_details(['SO17 7GL'])))
+    print(get_postcodes_details(['SO177GL']))
+    print(get_postcode_completions("SO16 7G"))
