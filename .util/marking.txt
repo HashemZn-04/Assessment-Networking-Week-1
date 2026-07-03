@@ -5,14 +5,14 @@ plugins: requests-mock-1.12.1
 collected 91 items
 
 test_postcode_cache.py FFFFFFFFFFFFF                                     [ 14%]
-test_postcode_cli.py F.F...F.F.....FF.F..F...........                    [ 49%]
+test_postcode_cli.py ................................                    [ 49%]
 test_postcode_functions.py ............................................. [ 98%]
 .                                                                        [100%]
 
-======================== 21 failed, 70 passed in 6.01s =========================
+======================== 13 failed, 78 passed in 7.14s =========================
 ************* Module postcode_cli
 postcode_cli.py:9:4: W0107: Unnecessary pass statement (unnecessary-pass)
-postcode_cli.py:30:12: C0200: Consider using enumerate instead of iterating with range and len (consider-using-enumerate)
+postcode_cli.py:31:12: C0200: Consider using enumerate instead of iterating with range and len (consider-using-enumerate)
 ************* Module postcode_functions
 postcode_functions.py:13:4: W2301: Unnecessary ellipsis constant (unnecessary-ellipsis)
 postcode_functions.py:19:4: W2301: Unnecessary ellipsis constant (unnecessary-ellipsis)
@@ -24,5 +24,5 @@ postcode_functions.py:4:0: W0611: Unused import os (unused-import)
 postcode_functions.py:5:0: W0611: Unused import json (unused-import)
 
 ------------------------------------------------------------------
-Your code has been rated at 8.89/10 (previous run: 8.89/10, +0.00)
+Your code has been rated at 8.90/10 (previous run: 8.90/10, +0.00)
 
