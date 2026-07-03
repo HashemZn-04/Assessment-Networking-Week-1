@@ -4,12 +4,12 @@ rootdir: /home/runner/work/assessment-networking-week-1-main/assessment-networki
 plugins: requests-mock-1.12.1
 collected 91 items
 
-test_postcode_cache.py FFFF.........                                     [ 14%]
+test_postcode_cache.py .............                                     [ 14%]
 test_postcode_cli.py ................................                    [ 49%]
-test_postcode_functions.py .........F................................... [ 98%]
+test_postcode_functions.py ............................................. [ 98%]
 .                                                                        [100%]
 
-========================= 5 failed, 86 passed in 6.38s =========================
+============================== 91 passed in 5.95s ==============================
 ************* Module postcode_cli
 postcode_cli.py:9:4: W0107: Unnecessary pass statement (unnecessary-pass)
 postcode_cli.py:31:12: C0200: Consider using enumerate instead of iterating with range and len (consider-using-enumerate)
