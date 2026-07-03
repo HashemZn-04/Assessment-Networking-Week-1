@@ -42,7 +42,14 @@ def get_postcode_for_location(lat: float, long: float) -> str:
 
 
 def get_postcode_completions(postcode_start: str) -> list[str]:
-    pass
+    """
+    Returns a list of postcodes the user may have wanted to
+    use, given the starting letters of a postcode.
+    """
+    url = f"https://api.postcodes.io/postcodes/{postcode_start}/autocomplete"
+    result = req.get(url, timeout=15)
+    data = result.json()['result']
+    return data
 
 
 def get_postcodes_details(postcodes: list[str]) -> dict:
